@@ -104,7 +104,7 @@ function SignUp() {
   const onSubmit = async () => {
     // if (validation()) {
     try {
-      const data = await axios.post("http://g10000.shop/api/member/signup", {
+      const data = await axios.post("https://g10000.shop/api/member/signup", {
         username,
         nickname,
         password,
