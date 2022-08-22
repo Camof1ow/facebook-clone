@@ -2,8 +2,8 @@ import styled from "styled-components";
 import FriendsList from "../components/FriendsList";
 import Header from "../components/Header";
 import InputPostbox from "../components/InputPostbox";
-import PostCard from "../components/PostCard";
-import SearchList from "../components/SearchList";
+
+import PostList from "../components/PostList";
 
 function Mainpage() {
   return (
@@ -11,14 +11,10 @@ function Mainpage() {
       <Header></Header>
 
       <GlobalStyle>
-        <PostLists>
+        <LeftSidePosts>
           <InputPostbox />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-          <PostCard />
-        </PostLists>
+          <PostList />
+        </LeftSidePosts>
         <FriendsList />
       </GlobalStyle>
     </Global>
@@ -34,11 +30,11 @@ const Global = styled.div`
 
 const GlobalStyle = styled.div`
   background-color: #f1f2f5;
-  height: auto;
+  height: 100vh;
   display: flex;
 `;
 
-const PostLists = styled.div`
+const LeftSidePosts = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import React, { useEffect, useRef, useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import styled from "styled-components";
 import axios from "axios";
 axios.defaults.withCredentials = true;
@@ -57,43 +57,89 @@ function SignUp() {
     }
 
     const onChangePasswordConfirm = (event) =>{
-        console.log("onChangePassword", event.target.value, password)
         if (password===event.target.value) {
-            console.log("password===value")
             setIsPasswordConfirm(true)
             setPasswordConfirmMsg('동일한 비밀번호입니다.')
         } else{
-            console.log("password!==value")
             setIsPassword(false)
             setPasswordConfirmMsg('비밀번호가 다릅니다.')
         } setPasswordConfirm(event.target.value);
     }
 
-    const onSubmit = (username, nickname, password) =>{
-        axios.post("http://localhost:3001/user",
-        username, nickname, password, profileimg);
-        console.log(username, nickname, password)
-    }
+    const validation = () => {
+        if (!username) setIsUsername(true);
+        if (!nickname) setIsNickname(true);
+        if (!password) setIsPassword(true);
+        if (!passwordConfirm) setIsPasswordConfirm(true);
+    
+        if (
+            username &&
+            nickname &&
+            password &&
+            passwordConfirm&&
+            !isUsername &&
+            !isNickname &&
+            !isPassword &&
+            !isPasswordConfirm
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      };
 
-    //   const onSubmit = async () => {
+      const onSubmit = async () => {
+        if (validation()) {
+          try {
+            await axios.post("http://localhost:3001/user", {
+                username,
+                nickname,
+                password,
+                passwordConfirm
+            });
+          } catch (error) {
+            throw new Error(error);
+          }
+          alert("회원 가입 완료하였습니다!!");
+          setUsername("");
+          setNickname("");
+          setPassword("");
+          setPasswordConfirm("");
+          return;
+        } else {
+          alert("입력 정보를 다시 확인하세요!!");
+        }
+      };
+
+
+
+
+    // const onSubmit = useCallback(
+    //     async (e: React.FormEvent<HTMLFormElement>) => {
+    //       e.preventDefault()
     //       try {
     //         await axios
-    //         .post("http://localhost:3001/user", {
-    //           username, //userId
-    //           nickname,
-    //           password,
-    //           profileimg, //profileImg
-    //         })
-    //         .then((returnData) => {
-    //             if(returnData.data.messeage){
-    //                 alert(returnData.data.messeage);
-    //             }else{
-    //                 alert('회원가입 실패');
+    //           .post("http://localhost:3001/user", {
+    //             username: username,
+    //             nickname: nickname,
+    //             password: password,
+    //             passwordConfirm: passwordConfirm
+    //           })
+    //           .then((res) => {
+    //             console.log('response:', res)
+    //             if (res.status === 200) {
+    //               Navigate("/login");
     //             }
     //           })
-    //       } catch (error) {
-    //         console.error('에러')
-    //       }}
+    //       } catch (err) {
+    //         console.error(err)
+    //       }
+    //     },
+    //     [username, nickname, password, passwordConfirm]
+    //   )
+
+
+
 
     return (
         <div className="App">
