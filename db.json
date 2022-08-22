@@ -1,0 +1,23 @@
+{
+  "user": [
+    {
+      "username": "test@gmail.com",
+      "password": "1234",
+      "passwordConfirm": "1234",
+      "profileImg": "default"
+    },
+    {
+      "username": "dd@naver.com",
+      "nickname": "ddddd",
+      "password": "dlwlgP123!@",
+      "profileimg": ""
+    },
+    {
+      "username": "ddd@naver.com",
+      "nickname": "dlwlgP",
+      "password": "dlwlgP675901!@",
+      "profileimg": ""
+    }
+  ]
+}
+
