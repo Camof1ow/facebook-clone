@@ -12,7 +12,7 @@ function SignUp() {
     const [nickname, setNickname] = useState('')
     const [password, setPassword] = useState('')
     const [passwordConfirm, setPasswordConfirm] = useState('')
-    const [profileimg, setProfileimg] =useState('')
+    const [profileImage, setProfileImage] =useState('')
     
     const [isUsername, setIsUsername] = useState(false)
     const [isNickname, setIsNickname] = useState(false)
@@ -50,10 +50,11 @@ function SignUp() {
         if (event.target.value && passwordRegex.test(event.target.value)) {
             setIsPassword(true)
             setPasswordMsg('올바른 비밀번호 형식입니다.')
+            setPassword(event.target.value)
         } else{
             setIsPassword(false)
             setPasswordMsg('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요')
-        } setPassword(event.target.value);
+        }
     }
 
     const onChangePasswordConfirm = (event) =>{
@@ -67,20 +68,20 @@ function SignUp() {
     }
 
     const validation = () => {
-        if (!username) setIsUsername(true);
-        if (!nickname) setIsNickname(true);
-        if (!password) setIsPassword(true);
-        if (!passwordConfirm) setIsPasswordConfirm(true);
+        if (username) setIsUsername(true);
+        if (nickname) setIsNickname(true);
+        if (password) setIsPassword(true);
+        if (passwordConfirm) setIsPasswordConfirm(true);
     
         if (
             username &&
             nickname &&
             password &&
-            passwordConfirm&&
-            !isUsername &&
-            !isNickname &&
-            !isPassword &&
-            !isPasswordConfirm
+            passwordConfirm &&
+            isUsername &&
+            isNickname &&
+            isPassword &&
+            isPasswordConfirm
         ) {
           return true;
         } else {
@@ -89,57 +90,28 @@ function SignUp() {
       };
 
       const onSubmit = async () => {
-        if (validation()) {
+        // if (validation()) {
           try {
-            await axios.post("http://localhost:3001/user", {
-                username,
-                nickname,
-                password,
-                passwordConfirm
+            const data = await axios.post("http://g10000.shop/api/member/signup", {
+                username: "doker4@pikachu.com",
+                nickname: "zizone4",
+                password: "aaaa1111",
+                profileImage:null
             });
           } catch (error) {
-            throw new Error(error);
+            console.log(error)
           }
-          alert("회원 가입 완료하였습니다!!");
-          setUsername("");
-          setNickname("");
-          setPassword("");
-          setPasswordConfirm("");
+        //   alert("회원 가입 완료하였습니다!!");
+            setUsername("");
+            setNickname("");
+            setPassword("");
           return;
-        } else {
-          alert("입력 정보를 다시 확인하세요!!");
-        }
-      };
+        } 
+    //     else {
+    //       alert("입력 정보를 다시 확인하세요!!");
 
-
-
-
-    // const onSubmit = useCallback(
-    //     async (e: React.FormEvent<HTMLFormElement>) => {
-    //       e.preventDefault()
-    //       try {
-    //         await axios
-    //           .post("http://localhost:3001/user", {
-    //             username: username,
-    //             nickname: nickname,
-    //             password: password,
-    //             passwordConfirm: passwordConfirm
-    //           })
-    //           .then((res) => {
-    //             console.log('response:', res)
-    //             if (res.status === 200) {
-    //               Navigate("/login");
-    //             }
-    //           })
-    //       } catch (err) {
-    //         console.error(err)
-    //       }
-    //     },
-    //     [username, nickname, password, passwordConfirm]
-    //   )
-
-
-
+    //     }
+    //   };
 
     return (
         <div className="App">
