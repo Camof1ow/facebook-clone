@@ -1,14 +1,29 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { useInput } from "../hooks/useInput";
+import { useUploadImg } from "../hooks/useUploadImg";
 
 function InputPostbox() {
+  const [postContent, postContentChange] = useInput("");
+
+  const [imgFile, imgFileHandler] = useUploadImg("");
+
   return (
     <PostboxContainer>
       <PostTopContainer>
         <Imagebox>
           <MyProfileImg />
         </Imagebox>
-        <PostInput placeholder="What's your feelings?" />
+        <PostInput
+          onChange={postContentChange}
+          value={postContent}
+          placeholder="What's your feelings?"
+        />
+        <p>{postContent}</p>
       </PostTopContainer>
+
+      <input type="file" onChange={imgFileHandler} />
+      <img src={imgFile} />
 
       <ButtonContainer>
         <ButtonBox>
