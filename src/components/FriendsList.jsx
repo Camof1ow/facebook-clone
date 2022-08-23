@@ -6,8 +6,8 @@ import Friends from "./Friends";
 
 function FriendsList() {
   const dispatch = useDispatch();
-
   const {friends, isLoading, error} = useSelector((state)=>state.friends);
+
   console.log(friends)
 
   useEffect(() => {
@@ -25,8 +25,11 @@ function FriendsList() {
   return (
     <StFriendsList>
       <h3 style={{ marginBottom: "10px" }}>Friends</h3>
-      <button onClick={()=>{dispatch(__getFriends())}}>Dispatch</button>
-      <Friends/>
+      {/* <button onClick={()=>{dispatch(__getFriends())}}>Dispatch</button> */}
+      {friends.map((friends)=>{
+        return <Friends key={friends.id} friends = {friends}/>
+      }      
+      )}
     </StFriendsList>
     
   );
