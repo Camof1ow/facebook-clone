@@ -29,6 +29,24 @@ export const getAllCommentsById = createAsyncThunk(
   }
 );
 
+export const addComment = createAsyncThunk(
+  "comments/addComment",
+  async (payload, thunkAPI) => {
+    try {
+      const data = await axios.post(
+        `http://52.79.240.14:8080/api/comments/${payload.postId}`,
+        {
+          comment: payload.comment,
+        },
+        { headers: { authorization: usertoken } }
+      );
+      return thunkAPI.fulfillWithValue(data.data.data);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const commentSlice = createSlice({
   name: "comments",
   initialState,
