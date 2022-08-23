@@ -1,16 +1,19 @@
 import styled from "styled-components";
 import facebookLogo from "../img/facebook-logo.png";
+import { getUserData } from "../storage/Cookie";
 import SearchList from "./SearchList";
 
 function Header() {
+  const myProfile = getUserData();
+
   return (
     <HeaderDiv>
       <FBlogo src={facebookLogo}></FBlogo>
       <Searchbox>
         <SearchInput placeholder="search friends" />
       </Searchbox>
-
-      <MyProfileImg />
+      {/* <p>{myProfile.nickname}</p> */}
+      <MyProfileImg src={myProfile.profileImage} />
     </HeaderDiv>
   );
 }

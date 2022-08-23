@@ -1,12 +1,23 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { useInput } from "../hooks/useInput";
 import { useUploadImg } from "../hooks/useUploadImg";
+import { addFbPost } from "../redux/modules/postSlice";
+import PostInputModal from "./PostInputModal";
 
 function InputPostbox() {
-  const [postContent, postContentChange] = useInput("");
+  const dispatch = useDispatch();
 
-  const [imgFile, imgFileHandler] = useUploadImg("");
+  const [postContent, postContentChange, setPostContent] = useInput("");
+
+  const [inputToggle, setInputToggle] = useState(false);
+
+  const onSubmitPost = () => {
+    if (postContent === "") return;
+    dispatch(addFbPost({ postContent }));
+    setPostContent("");
+  };
 
   return (
     <PostboxContainer>
@@ -19,18 +30,17 @@ function InputPostbox() {
           value={postContent}
           placeholder="What's your feelings?"
         />
-        <p>{postContent}</p>
       </PostTopContainer>
-
-      <input type="file" onChange={imgFileHandler} />
-      <img src={imgFile} />
-
+      {inputToggle === true ? <PostInputModal tg={setInputToggle} /> : null}
+      {/* <PostInputModal /> */}
       <ButtonContainer>
         <ButtonBox>
-          <StButton>Upload Photos</StButton>
+          <StButton onClick={() => setInputToggle(true)}>
+            Upload Photos
+          </StButton>
         </ButtonBox>
         <ButtonBox>
-          <StButton>Post</StButton>
+          <StButton onClick={onSubmitPost}>Post</StButton>
         </ButtonBox>
       </ButtonContainer>
     </PostboxContainer>

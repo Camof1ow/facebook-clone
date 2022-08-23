@@ -7,5 +7,5 @@ export function useInput(initialValue) {
     setInputValue(e.target.value);
   };
 
-  return [inputValue, onHandleChange];
+  return [inputValue, onHandleChange, setInputValue];
 }

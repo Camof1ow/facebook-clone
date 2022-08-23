@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useInput } from "../hooks/useInput";
 import axios from "axios";
-import { setAccessToken } from "../storage/Cookie";
+import { setAccessToken, setUserData } from "../storage/Cookie";
 // import Header from ".components/Header"
 
 function Login() {
@@ -16,19 +16,25 @@ function Login() {
     if (userName === "" && userPassword === "") return;
 
     try {
-      const data = await axios.post("http://g10000.shop/api/member/login", {
-        username: userName,
-        password: userPassword,
-      });
+      const data = await axios.post(
+        "http://52.79.240.14:8080/api/member/login",
+        {
+          username: userName,
+          password: userPassword,
+        }
+      );
+      console.log(data);
       setAccessToken(data.headers.authorization);
+      setUserData(data.data);
       axios.defaults.headers.common[
         "Authorization"
       ] = `${data.headers.authorization}`;
       alert("login 성공입니다");
-      console.log(data);
+
       window.location.href = "/";
     } catch (error) {
       console.log(error);
+      alert("login 실패입니다.");
     }
   };
 
