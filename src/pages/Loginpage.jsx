@@ -1,9 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useInput } from "../hooks/useInput";
 import axios from "axios";
 import { setAccessToken, setUserData } from "../storage/Cookie";
+import SignUp from "./Signuppage";
+
 // import Header from ".components/Header"
 
 function Login() {
@@ -11,6 +13,8 @@ function Login() {
   const [userPassword, userPwHandler] = useInput("");
 
   console.log(userName, userPassword);
+
+  const [signUpToggle, setSignUpToggle] = useState(false);
 
   const onLoginSubmit = async () => {
     if (userName === "" && userPassword === "") return;
@@ -116,11 +120,13 @@ function Login() {
                   backgroundColor: "#49C530",
                   margin: "10px 50px",
                 }}
+                onClick={() => setSignUpToggle(true)}
               >
                 New Account
               </StBtn>
             </div>
           </StLogin>
+          {signUpToggle === true ? <SignUp tg={setSignUpToggle} /> : null}
         </StWhole>
       </StContainer>
     </div>

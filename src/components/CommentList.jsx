@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useInput } from "../hooks/useInput";
 import { addComment } from "../redux/modules/commentSlice";
 
-function CommentList(postId) {
+function CommentList({ postId }) {
   const dispatch = useDispatch();
 
   const [comment, commentHandler, setComment] = useInput("");

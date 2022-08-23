@@ -9,11 +9,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { useUploadImg } from "../hooks/useUploadImg";
+import { ModalDiv, ModalLayer } from "../UI/Modal";
 axios.defaults.withCredentials = true;
 const headers = { withCredentials: true };
 // import Header from ".components/Header"
 
-function SignUp() {
+function SignUp({ tg }) {
   const [username, setUsername] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -133,10 +134,10 @@ function SignUp() {
   //   };
 
   return (
-    <div className="App">
-      <StSignUP>
+    <ModalLayer>
+      <ModalDiv>
         <div style={{ textAlign: "right", margin: "0px" }}>
-          <StBtnX>X</StBtnX>
+          <StBtnX onClick={() => tg(false)}>X</StBtnX>
         </div>
         <h2 style={{ textAlign: "left", marginTop: "0px" }}>가입하기</h2>
 
@@ -226,8 +227,8 @@ function SignUp() {
             sign up
           </StBtn>
         </div>
-      </StSignUP>
-    </div>
+      </ModalDiv>
+    </ModalLayer>
   );
 }
 
