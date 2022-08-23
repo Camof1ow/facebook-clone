@@ -5,13 +5,12 @@ import { __getFriends } from "../redux/modules/friendsSlice";
 function Friends({friends}) {
   const dispatch = useDispatch();
 
-
   return (
       <StFriend>
         <StFriendImgDiv>
-          <StFriendImg />
+          <StFriendImg src={friends.profileImg}/>
         </StFriendImgDiv>
-        <StFriendName>Kim Sparta</StFriendName>
+        <StFriendName>{friends.nickname}</StFriendName>
       </StFriend>
   );
 }
