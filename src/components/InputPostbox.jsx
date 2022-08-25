@@ -6,6 +6,13 @@ import { useUploadImg } from "../hooks/useUploadImg";
 import { addFbPost } from "../redux/modules/postSlice";
 import { getUserData } from "../storage/Cookie";
 import PostInputModal from "./PostInputModal";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+
+
+
+
 
 function InputPostbox() {
   const dispatch = useDispatch();
@@ -39,11 +46,14 @@ function InputPostbox() {
       <ButtonContainer>
         <ButtonBox>
           <StButton onClick={() => setInputToggle(true)}>
-            Upload Photos
+          <FontAwesomeIcon icon={faCameraRetro} style={{marginRight:"10px"}}/>
+          Upload Photos
           </StButton>
         </ButtonBox>
         <ButtonBox>
-          <StButton onClick={onSubmitPost}>Post</StButton>
+          <StButton onClick={onSubmitPost}>
+          <FontAwesomeIcon icon={faUpload} style={{marginRight:"10px"}}/>
+            Post</StButton>
         </ButtonBox>
       </ButtonContainer>
     </PostboxContainer>
