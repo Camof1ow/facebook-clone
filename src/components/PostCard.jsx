@@ -1,29 +1,75 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { getAllCommentsById } from "../redux/modules/commentSlice";
+import { deleteFbPost } from "../redux/modules/postSlice";
+import CommentList from "./CommentList";
+import EditModal from "./EditModal";
 
-function PostCard() {
+function PostCard({ posts, i }) {
+  const dispatch = useDispatch();
+
+  const id = posts.posts.id;
+
+  const onDeletePost = () => {
+    dispatch(deleteFbPost(Number(id)));
+  };
+
+  const [EditToggle, setEditToggle] = useState(false);
+  const [commentToggle, setCommentToggle] = useState(false);
+
+  const onGetComment = () => {
+    setCommentToggle(!commentToggle);
+    if (commentToggle === false) {
+      dispatch(getAllCommentsById(id));
+    }
+  };
+
   return (
-    <PostContainer>
+    <PostContainer key={i}>
       <PostTop>
-        <PostPic></PostPic>
+        <PostProfileImgDiv>
+          <PostProfileImg src={posts.posts.member.profileImg} />
+        </PostProfileImgDiv>
         <PostInfo>
-          <p style={{ fontWeight: "bold" }}>Sparta Park</p>
-          <p>12 hrs ago</p>
+          <p style={{ fontWeight: "bold" }}>{posts.posts.member.nickname}</p>
+          <p>{posts.posts.createdAt}</p>
         </PostInfo>
       </PostTop>
+      <StButton style={{ color: "red" }} onClick={onDeletePost}>
+        delete
+      </StButton>
+      <StButton style={{ color: "blue" }} onClick={() => setEditToggle(true)}>
+        edit
+      </StButton>
 
-      <PostContent>hello world!</PostContent>
+      {EditToggle === true ? (
+        <EditModal tg={setEditToggle} postId={id} />
+      ) : null}
+
+      <PostContent>{posts.posts.content}</PostContent>
+      {posts.posts.imageUrl !== null ? (
+        <PostContentImgDiv>
+          <PostContentImg src={posts.posts.imageUrl} />
+        </PostContentImgDiv>
+      ) : null}
+
       <LikeComment>
-        <p>1.3k likes</p>
-        <p>4.6k comment</p>
+        <p>{posts.likeNum}</p>
+        <p>{posts.commentNum}</p>
       </LikeComment>
       <ButtonContainer>
         <ButtonBox>
           <StButton>Like</StButton>
         </ButtonBox>
         <ButtonBox>
-          <StButton>Comment</StButton>
+          <StButton onClick={onGetComment}>Comment</StButton>
         </ButtonBox>
       </ButtonContainer>
+
+      {commentToggle === true ? (
+        <CommentList postId={id} tg={setCommentToggle} />
+      ) : null}
     </PostContainer>
   );
 }
@@ -43,12 +89,16 @@ const PostTop = styled.div`
   align-items: center;
 `;
 
-const PostPic = styled.div`
+const PostProfileImgDiv = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
   overflow: hidden;
   background: #7b83c7;
+`;
+
+const PostProfileImg = styled.img`
+  width: 100%;
 `;
 const PostInfo = styled.div`
   margin-left: 15px;
@@ -58,6 +108,17 @@ const PostContent = styled.div`
   font-size: 16px;
   font-weight: normal;
   padding: 10px;
+`;
+
+const PostContentImgDiv = styled.div`
+  margin-left: 30px;
+  width: 500px;
+  overflow: hidden;
+`;
+
+const PostContentImg = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 const LikeComment = styled.div`

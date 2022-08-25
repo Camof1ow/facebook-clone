@@ -1,19 +1,39 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __getFriends } from "../redux/modules/friendsSlice";
+import Friends from "./Friends";
 
 function FriendsList() {
+  const dispatch = useDispatch();
+  const {friends, isLoading, error} = useSelector((state)=>state.friends);
+
+  console.log(friends)
+
+  useEffect(() => {
+    dispatch(__getFriends());
+  },[dispatch]);
+
+  if (isLoading) {
+    return <div>로딩 중....</div>;
+  }
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+  
   return (
     <StFriendsList>
       <h3 style={{ marginBottom: "10px" }}>Friends</h3>
-      <StFriend>
-        <StFriendImgDiv>
-          <StFriendImg />
-        </StFriendImgDiv>
-        <StFriendName>Kim Sparta</StFriendName>
-      </StFriend>
+      {/* <button onClick={()=>{dispatch(__getFriends())}}>Dispatch</button> */}
+      {friends.map((friends)=>{
+        return <Friends key={friends.id} friends = {friends}/>
+      }      
+      )}
     </StFriendsList>
+    
   );
 }
-
 export default FriendsList;
 
 const StFriendsList = styled.div`
@@ -26,32 +46,3 @@ const StFriendsList = styled.div`
   }
 `;
 
-const StFriend = styled.div`
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: 0.3s ease-in-out;
-  border-radius: 5px;
-  padding: 7px 10px;
-  color: #333;
-`;
-
-const StFriendImgDiv = styled.div`
-  height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-  background: #7b83c7;
-`;
-
-const StFriendImg = styled.img`
-  width: 100%;
-  background: #7b83c7;
-`;
-
-const StFriendName = styled.p`
-  font-size: 18px;
-  cursor: pointer;
-  margin-left: 8px;
-`;
