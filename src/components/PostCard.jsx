@@ -5,6 +5,8 @@ import { getAllCommentsById } from "../redux/modules/commentSlice";
 import { deleteFbPost } from "../redux/modules/postSlice";
 import CommentList from "./CommentList";
 import EditModal from "./EditModal";
+import moment from "moment";
+import "moment/locale/ko";
 
 function PostCard({ posts, i }) {
   const dispatch = useDispatch();
@@ -32,8 +34,25 @@ function PostCard({ posts, i }) {
           <PostProfileImg src={posts.posts.member.profileImg} />
         </PostProfileImgDiv>
         <PostInfo>
-          <p style={{ fontWeight: "bold" }}>{posts.posts.member.nickname}</p>
-          <p>{posts.posts.createdAt}</p>
+          <p
+            style={{
+              fontWeight: "bold",
+              marginBottom: "0px",
+              fontSize: "18px",
+            }}
+          >
+            {posts.posts.member.nickname}
+          </p>
+          <p
+            style={{
+              fontWeight: "normal",
+              marginTop: "6px",
+              color: "#777",
+              fontSize: "14px",
+            }}
+          >
+            {moment(posts.posts.createdAt).fromNow()}
+          </p>
         </PostInfo>
       </PostTop>
       <StButton style={{ color: "red" }} onClick={onDeletePost}>
@@ -48,6 +67,7 @@ function PostCard({ posts, i }) {
       ) : null}
 
       <PostContent>{posts.posts.content}</PostContent>
+
       {posts.posts.imageUrl !== null ? (
         <PostContentImgDiv>
           <PostContentImg src={posts.posts.imageUrl} />
@@ -55,8 +75,27 @@ function PostCard({ posts, i }) {
       ) : null}
 
       <LikeComment>
-        <p>{posts.likeNum}</p>
-        <p>{posts.commentNum}</p>
+        <p
+          style={{
+            color: "#777",
+            fontSize: "14px",
+            marginTop: "3px",
+            marginBottom: "3px",
+          }}
+        >
+          {posts.likeNum} likes
+        </p>
+        <p
+          style={{
+            color: "#777",
+            fontSize: "14px",
+            marginTop: "3px",
+            marginBottom: "3px",
+          }}
+        >
+          {" "}
+          {posts.commentNum} comments
+        </p>
       </LikeComment>
       <ButtonContainer>
         <ButtonBox>
@@ -75,9 +114,8 @@ function PostCard({ posts, i }) {
 }
 
 const PostContainer = styled.div`
-  width: 600px;
+  width: 620px;
 
-  padding: 10px;
   margin-bottom: 20px;
   background: #fff;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
@@ -85,6 +123,7 @@ const PostContainer = styled.div`
 `;
 
 const PostTop = styled.div`
+  margin-left: 10px;
   display: flex;
   align-items: center;
 `;
@@ -105,14 +144,14 @@ const PostInfo = styled.div`
 `;
 
 const PostContent = styled.div`
+  margin-left: 16px;
   font-size: 16px;
   font-weight: normal;
   padding: 10px;
 `;
 
 const PostContentImgDiv = styled.div`
-  margin-left: 30px;
-  width: 500px;
+  width: 620px;
   overflow: hidden;
 `;
 
@@ -126,8 +165,8 @@ const LikeComment = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 10px;
-  margin-top: 10px;
+  padding: 2px 10px;
+  margin-top: 2px;
 `;
 
 const ButtonContainer = styled.div`
@@ -137,6 +176,7 @@ const ButtonContainer = styled.div`
   align-items: center;
   padding: 5px 10px;
   margin-top: 10px;
+  border-top: 1px solid #d1d2d3;
 `;
 
 const ButtonBox = styled.div`

@@ -22,7 +22,7 @@ function SearchList() {
       {searchResult.map((sr) => (
         <StFriend>
           <StFriendImgDiv>
-            <StFriendImg />
+            <StFriendImg src={sr.profileImg} />
           </StFriendImgDiv>
           <StFriendName>{sr.nickname}</StFriendName>
 
