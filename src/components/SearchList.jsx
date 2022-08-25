@@ -1,15 +1,34 @@
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { __addFriend } from "../redux/modules/friendsSlice";
 
 function SearchList() {
+  const { searchResult } = useSelector((state) => state.searchResult);
+
+  console.log(searchResult);
+  const dispatch = useDispatch();
+
+  const onAddFriend = (friendId) => {
+    dispatch(__addFriend(friendId));
+  };
+
+  const { friends } = useSelector((state) => state.friends);
+
+  console.log(friends);
+
   return (
     <StFriendsList>
       <h3 style={{ marginBottom: "10px" }}>Peoples</h3>
-      <StFriend>
-        <StFriendImgDiv>
-          <StFriendImg />
-        </StFriendImgDiv>
-        <StFriendName>Kim Sparta</StFriendName>
-      </StFriend>
+      {searchResult.map((sr) => (
+        <StFriend>
+          <StFriendImgDiv>
+            <StFriendImg />
+          </StFriendImgDiv>
+          <StFriendName>{sr.nickname}</StFriendName>
+
+          <button onClick={() => onAddFriend(sr.id)}>+</button>
+        </StFriend>
+      ))}
     </StFriendsList>
   );
 }

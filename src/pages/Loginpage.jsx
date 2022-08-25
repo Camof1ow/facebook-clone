@@ -26,13 +26,10 @@ function Login() {
     if (userName === "" && userPassword === "") return;
 
     try {
-      const data = await axios.post(
-        "https://g10000.shop/api/member/login",
-        {
-          username: userName,
-          password: userPassword,
-        }
-      );
+      const data = await axios.post("https://g10000.shop/api/member/login", {
+        username: userName,
+        password: userPassword,
+      });
       console.log(data);
       setAccessToken(data.headers.authorization);
       setUserData(data.data);

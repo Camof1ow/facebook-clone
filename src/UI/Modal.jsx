@@ -22,7 +22,7 @@ export const ModalLayer = styled.div`
 
 export const ModalDiv = styled.div`
   width: 500px;
-  height: 50%;
+  height: 760px;
   padding: 10px;
   left: 50%;
   top: 50%;
