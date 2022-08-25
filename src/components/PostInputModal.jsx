@@ -20,7 +20,7 @@ function PostInputModal({ tg }) {
 
   return (
     <ModalLayer>
-      <ModalDiv>
+      <ModalDiv style={{padding: "10px", height: "700px", paddingLeft:"30px", paddingRight:"3px"}}>
         <h2>Create Post</h2>
         <PostInput
           type="textarea"
@@ -28,13 +28,14 @@ function PostInputModal({ tg }) {
           value={postContent}
           onChange={postContentChange}
           placeholder="How are you doing?"
+          style={{position: "relative"}}
         />
         <Imagebox>
           <PostImage src={imgFile} />
         </Imagebox>
-        <PostInput type="file" onChange={imgFileHandler} />
+        <PostInput type="file" onChange={imgFileHandler} style={{hegith: "10px", marginBottom: "0px"}}/>
 
-        <ButtonContainer>
+        <ButtonContainer style={{marginTop:"0px"}}>
           <ButtonBox>
             <StButton onClick={() => tg(false)} style={{ color: "red" }}>
               Close
