@@ -23,7 +23,7 @@ facebook 클론 프로젝트 입니다.
 
 |이름|팀원 깃허브|포지션|
 |---|---|---|
-|노진서|https://github.com/oneqrhee|Front-end|
+|노진서|https://github.com/bennoholik|Front-end|
 |김혜림|https://github.com/hlim9022|Back-end|
 |이동건|https://github.com/dongkeon-lee|Back-end|
 |황인권|https://github.com/ingwon97|Back-end|
