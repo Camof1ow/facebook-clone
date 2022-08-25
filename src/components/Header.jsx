@@ -6,6 +6,7 @@ import facebookLogo from "../img/facebook-logo.png";
 import { searchFriend } from "../redux/modules/searchSlice";
 import { getUserData } from "../storage/Cookie";
 import SearchList from "./SearchList";
+import ProfileLogout from "./ProfileLogout";
 
 function Header() {
   const myProfile = getUserData();
@@ -14,6 +15,8 @@ function Header() {
 
   const [searchInput, setSearchInput] = useState("");
   const [searchToggle, setSearchToggle] = useState(false);
+
+  let [modalProfileLogOut, setModalProfileLogOut] = useState(false);
 
   const onSearchInput = (e) => {
     const searchValue = e.target.value;
@@ -26,7 +29,8 @@ function Header() {
     }
   };
 
-  const onSearch = () => {};
+
+  // const onSearch = () => {};
 
   return (
     <HeaderDiv>
@@ -35,20 +39,26 @@ function Header() {
         <SearchInput
           // value={searchInput}
           onChange={(e) => onSearchInput(e)}
-          placeholder="search friends"
+          placeholder="Search Friends"
         />
       </Searchbox>
       {searchToggle === true ? <SearchList /> : null}
-      <MyProfileImg src={myProfile.profileImage} />
+
+      <MyProfileImg src={myProfile.profileImage} 
+        onClick={()=>{setModalProfileLogOut(modalProfileLogOut===false? true:false)}}/>
+        {modalProfileLogOut===true?<ProfileLogout/>:null}
+
     </HeaderDiv>
   );
 }
+
+
 
 const HeaderDiv = styled.div`
   background-color: #fff;
 
   width: 100%;
-  height: 90px;
+  height: 60px;
   left: 0px;
   top: 0px;
   position: sticky;
@@ -56,18 +66,18 @@ const HeaderDiv = styled.div`
 
 const FBlogo = styled.img`
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   left: 23px;
-  top: 13px;
+  top: 12px;
 `;
 
 const SearchInput = styled.input`
   position: absolute;
   width: 357px;
-  height: 50px;
-  left: 97px;
-  top: 17px;
+  height: 40px;
+  left: 77px;
+  top: 10px;
 
   background: #f1f2f5;
   border-radius: 33px;
@@ -77,20 +87,22 @@ const SearchInput = styled.input`
 
   font-style: normal;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 16px;
 `;
 
 const Searchbox = styled.div``;
 
 const MyProfileImg = styled.img`
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   right: 24px;
-  top: 13px;
+  top: 12px;
   border-radius: 100%;
   background: #7b83c7;
   float: right;
 `;
+
+
 
 export default Header;

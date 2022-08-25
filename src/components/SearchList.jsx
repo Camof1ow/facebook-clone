@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { __addFriend } from "../redux/modules/friendsSlice";
@@ -5,28 +6,27 @@ import { __addFriend } from "../redux/modules/friendsSlice";
 function SearchList() {
   const { searchResult } = useSelector((state) => state.searchResult);
 
-  console.log(searchResult);
   const dispatch = useDispatch();
 
   const onAddFriend = (friendId) => {
     dispatch(__addFriend(friendId));
   };
 
-  const { friends } = useSelector((state) => state.friends);
-
-  console.log(friends);
+  // const { friends } = useSelector((state) => state.friends);
 
   return (
     <StFriendsList>
       <h3 style={{ marginBottom: "10px" }}>Peoples</h3>
       {searchResult.map((sr) => (
         <StFriend>
-          <StFriendImgDiv>
-            <StFriendImg />
-          </StFriendImgDiv>
-          <StFriendName>{sr.nickname}</StFriendName>
+          <StSearchLeft>
+            <StFriendImgDiv>
+              <StFriendImg src={sr.profileImg} />
+            </StFriendImgDiv>
+            <StFriendName>{sr.nickname}</StFriendName>
+          </StSearchLeft>
 
-          <button onClick={() => onAddFriend(sr.id)}>+</button>
+          <StButton onClick={() => onAddFriend(sr.id)}>+</StButton>
         </StFriend>
       ))}
     </StFriendsList>
@@ -53,6 +53,12 @@ const StFriend = styled.div`
   border-radius: 5px;
   padding: 7px 10px;
   color: #333;
+  justify-content: space-between;
+`;
+
+const StSearchLeft = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const StFriendImgDiv = styled.div`
@@ -73,4 +79,14 @@ const StFriendName = styled.p`
   font-size: 18px;
   cursor: pointer;
   margin-left: 8px;
+`;
+
+const StButton = styled.button`
+  border: none;
+  background-color: white;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
 `;
