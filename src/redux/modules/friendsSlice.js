@@ -20,7 +20,7 @@ export const __getFriends = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.get(
-        `http://52.79.240.14:8080/api/friends`, config);
+        `https://g10000.shop/api/friends`, config);
         //http://g10000.shop/api/friends`, 
         //`http://localhost:3001/friends`
         console.log(data.data.friends)
