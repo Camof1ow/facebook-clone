@@ -71,7 +71,11 @@ export const friendsSlice = createSlice({
       state.isFinish = true;
     },
     [__addFriend.fulfilled]: (state, action) => {
-      state.friends.push(action.payload);
+      console.log(action.payload[0]);
+      return {
+        ...state,
+        friends: [...state.friends, action.payload[0]],
+      };
     },
   },
 });
