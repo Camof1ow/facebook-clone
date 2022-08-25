@@ -6,6 +6,7 @@ import facebookLogo from "../img/facebook-logo.png";
 import { searchFriend } from "../redux/modules/searchSlice";
 import { getUserData } from "../storage/Cookie";
 import SearchList from "./SearchList";
+import ProfileLogout from "./ProfileLogout";
 
 function Header() {
   const myProfile = getUserData();
@@ -14,6 +15,8 @@ function Header() {
 
   const [searchInput, setSearchInput] = useState("");
   const [searchToggle, setSearchToggle] = useState(false);
+
+  let [modalProfileLogOut, setModalProfileLogOut] = useState(false);
 
   const onSearchInput = (e) => {
     const searchValue = e.target.value;
@@ -25,6 +28,7 @@ function Header() {
       setSearchToggle(true);
     }
   };
+
 
   // const onSearch = () => {};
 
@@ -39,10 +43,16 @@ function Header() {
         />
       </Searchbox>
       {searchToggle === true ? <SearchList /> : null}
-      <MyProfileImg src={myProfile.profileImage} />
+
+      <MyProfileImg src={myProfile.profileImage} 
+        onClick={()=>{setModalProfileLogOut(modalProfileLogOut===false? true:false)}}/>
+        {modalProfileLogOut===true?<ProfileLogout/>:null}
+
     </HeaderDiv>
   );
 }
+
+
 
 const HeaderDiv = styled.div`
   background-color: #fff;
@@ -92,5 +102,7 @@ const MyProfileImg = styled.img`
   background: #7b83c7;
   float: right;
 `;
+
+
 
 export default Header;
