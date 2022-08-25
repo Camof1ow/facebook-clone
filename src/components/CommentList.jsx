@@ -14,7 +14,7 @@ import {
 } from "../UI/UiTags";
 import EachComment from "./EachComment";
 
-function CommentList({ postId, tg }) {
+function CommentList({ postId, tg, posts }) {
   const dispatch = useDispatch();
 
   const { comments } = useSelector((state) => state.comments);
@@ -34,16 +34,18 @@ function CommentList({ postId, tg }) {
   return (
     <>
       <ModalLayer>
-        <ModalDiv style={{padding: "20px"}}>
-          <h1>Comments <StBtnX onClick={() => tg(false)}>X</StBtnX></h1>
-          
+        <ModalDiv style={{ padding: "20px" }}>
+          <h1>
+            Comments <StBtnX onClick={() => tg(false)}>X</StBtnX>
+          </h1>
+
           <div style={{ height: "600px", overflow: "scroll" }}>
             {comments.map((comment) => (
               <InOneLine style={{ marginTop: "30px" }}>
                 <ProfileImgDiv>
                   <ProfileImg />
                 </ProfileImgDiv>
-                <EachComment  postId={postId} comment={comment} />
+                <EachComment postId={postId} comment={comment} posts />
               </InOneLine>
             ))}{" "}
           </div>

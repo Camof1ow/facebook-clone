@@ -12,6 +12,7 @@ import {
 } from "../UI/UiTags";
 
 import styled from "styled-components";
+import { getUserData } from "../storage/Cookie";
 
 function EachComment({ postId, comment }) {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ function EachComment({ postId, comment }) {
     console.log(editedComment);
   };
 
+  const userinfo = getUserData();
+
   return (
     <>
       {editToggle === false ? (
@@ -42,20 +45,40 @@ function EachComment({ postId, comment }) {
               {comment.comment}
             </p>
           </GreyDivBox>{" "}
-          <button style={{marginLeft: "5px"}}
-            onClick={() => {
-              onDeleteComment(comment.id);
-            }}
-          >
-            delete
-          </button>
-          <button style={{marginLeft: "5px"}} onClick={() => setEditToggle(true)}>edit</button>
+          {userinfo.nickname === comment.nickname ? (
+            <>
+              <StButton
+                style={{ marginLeft: "5px", color: "red" }}
+                onClick={() => {
+                  onDeleteComment(comment.id);
+                }}
+              >
+                delete
+              </StButton>
+              <StButton
+                style={{ marginLeft: "5px" }}
+                onClick={() => setEditToggle(true)}
+              >
+                edit
+              </StButton>
+            </>
+          ) : null}
         </>
       ) : (
         <div>
           <UiInput value={editedComment} onChange={editedCommentHandler} />
-          <button style={{marginLeft: "5px"}}onClick={() => onEditComment(comment.id)}>수정</button>
-          <button style={{marginLeft: "5px"}}onClick={() => setEditToggle(false)}>취소</button>
+          <StButton
+            style={{ marginLeft: "5px" }}
+            onClick={() => onEditComment(comment.id)}
+          >
+            수정
+          </StButton>
+          <StButton
+            style={{ marginLeft: "5px", color: "red" }}
+            onClick={() => setEditToggle(false)}
+          >
+            취소
+          </StButton>
         </div>
       )}
     </>
@@ -73,4 +96,14 @@ const StBtn = styled.button`
   cursor: pointer;
   border: solid 1px;
   float: left;
+`;
+
+const StButton = styled.button`
+  border: none;
+  background-color: white;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 30px;
 `;

@@ -62,17 +62,24 @@ function PostCard({ posts, i }) {
             </p>
           </PostInfo>
         </PostTopLeft>
-        <StButton style={{ fontSize: "25px", marginRight: "10px", cursor:"pointer" }}
-          onClick={()=>{setEditDelete(editDelete===false?true:false)}}>
-          ...
-        </StButton>
+
+        {userinfo.userId === posts.posts.member.id ? (
+          <StButton
+            style={{ fontSize: "25px", marginRight: "10px", cursor: "pointer" }}
+            onClick={() => {
+              setEditDelete(editDelete === false ? true : false);
+            }}
+          >
+            ...
+          </StButton>
+        ) : null}
       </PostTop>
 
-      {editDelete===true? <EditDelete></EditDelete>:null}
+      {editDelete === true ? (
+        <EditDelete tg={setEditToggle} posts={posts} />
+      ) : null}
 
-
-
-      {userinfo.userId === posts.posts.member.id ? (
+      {/* {userinfo.userId === posts.posts.member.id ? (
         <div>
           <StButton style={{ color: "red" }} onClick={onDeletePost}>
             delete
@@ -84,9 +91,7 @@ function PostCard({ posts, i }) {
             edit
           </StButton>
         </div>
-      ) : null}
-
-
+      ) : null} */}
 
       {EditToggle === true ? (
         <EditModal tg={setEditToggle} postId={id} />
@@ -149,7 +154,7 @@ function PostCard({ posts, i }) {
       </ButtonContainer>
 
       {commentToggle === true ? (
-        <CommentList postId={id} tg={setCommentToggle} />
+        <CommentList postId={id} tg={setCommentToggle} posts={posts} />
       ) : null}
     </PostContainer>
   );
