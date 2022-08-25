@@ -4,6 +4,7 @@ import { useInput } from "../hooks/useInput";
 import { addComment, deleteComment } from "../redux/modules/commentSlice";
 import { getUserData } from "../storage/Cookie";
 import { ModalDiv, ModalLayer } from "../UI/Modal";
+import styled from "styled-components";
 import {
   GreyDivBox,
   InOneLine,
@@ -13,7 +14,7 @@ import {
 } from "../UI/UiTags";
 import EachComment from "./EachComment";
 
-function CommentList({ postId, tg }) {
+function CommentList({ postId, tg, posts }) {
   const dispatch = useDispatch();
 
   const { comments } = useSelector((state) => state.comments);
@@ -33,16 +34,18 @@ function CommentList({ postId, tg }) {
   return (
     <>
       <ModalLayer>
-        <ModalDiv>
-          <h1>Comments</h1>
-          <button onClick={() => tg(false)}>X</button>
+        <ModalDiv style={{ padding: "20px" }}>
+          <h1>
+            Comments <StBtnX onClick={() => tg(false)}>X</StBtnX>
+          </h1>
+
           <div style={{ height: "600px", overflow: "scroll" }}>
             {comments.map((comment) => (
               <InOneLine style={{ marginTop: "30px" }}>
                 <ProfileImgDiv>
                   <ProfileImg />
                 </ProfileImgDiv>
-                <EachComment postId={postId} comment={comment} />
+                <EachComment postId={postId} comment={comment} posts />
               </InOneLine>
             ))}{" "}
           </div>
@@ -60,7 +63,7 @@ function CommentList({ postId, tg }) {
               onChange={commentHandler}
               style={{ height: "30px", width: "330px" }}
             />
-            <button onClick={onSendComment}>send</button>
+            <StBtn onClick={onSendComment}>send</StBtn>
           </InOneLine>
         </ModalDiv>
       </ModalLayer>
@@ -70,3 +73,25 @@ function CommentList({ postId, tg }) {
 // }
 
 export default CommentList;
+
+const StBtn = styled.button`
+  padding: 10px;
+  margin: 10px 0px 10px 3px;
+  width: 60px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+`;
+
+const StBtnX = styled.button`
+  background-color: white;
+  position: right;
+  text-align: right;
+  margin: 0px;
+  width: 0px;
+  height: 0px;
+  font-size: 20px;
+  cursor: pointer;
+  border: none;
+`;

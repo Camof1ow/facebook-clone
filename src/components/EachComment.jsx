@@ -11,6 +11,9 @@ import {
   UiInput,
 } from "../UI/UiTags";
 
+import styled from "styled-components";
+import { getUserData } from "../storage/Cookie";
+
 function EachComment({ postId, comment }) {
   const dispatch = useDispatch();
   const [editToggle, setEditToggle] = useState(false);
@@ -28,6 +31,8 @@ function EachComment({ postId, comment }) {
     console.log(editedComment);
   };
 
+  const userinfo = getUserData();
+
   return (
     <>
       {editToggle === false ? (
@@ -40,20 +45,40 @@ function EachComment({ postId, comment }) {
               {comment.comment}
             </p>
           </GreyDivBox>{" "}
-          <button
-            onClick={() => {
-              onDeleteComment(comment.id);
-            }}
-          >
-            delete
-          </button>
-          <button onClick={() => setEditToggle(true)}>edit</button>
+          {userinfo.nickname === comment.nickname ? (
+            <>
+              <StButton
+                style={{ marginLeft: "5px", color: "red" }}
+                onClick={() => {
+                  onDeleteComment(comment.id);
+                }}
+              >
+                delete
+              </StButton>
+              <StButton
+                style={{ marginLeft: "5px" }}
+                onClick={() => setEditToggle(true)}
+              >
+                edit
+              </StButton>
+            </>
+          ) : null}
         </>
       ) : (
         <div>
           <UiInput value={editedComment} onChange={editedCommentHandler} />
-          <button onClick={() => onEditComment(comment.id)}>수정완료</button>
-          <button onClick={() => setEditToggle(false)}>cancel</button>
+          <StButton
+            style={{ marginLeft: "5px" }}
+            onClick={() => onEditComment(comment.id)}
+          >
+            수정
+          </StButton>
+          <StButton
+            style={{ marginLeft: "5px", color: "red" }}
+            onClick={() => setEditToggle(false)}
+          >
+            취소
+          </StButton>
         </div>
       )}
     </>
@@ -61,3 +86,24 @@ function EachComment({ postId, comment }) {
 }
 
 export default EachComment;
+
+const StBtn = styled.button`
+  padding: 10px;
+  margin: 0px 0px 10px 3px;
+  width: 60px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  border: solid 1px;
+  float: left;
+`;
+
+const StButton = styled.button`
+  border: none;
+  background-color: white;
+
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 30px;
+`;

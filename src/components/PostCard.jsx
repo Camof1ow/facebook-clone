@@ -8,6 +8,7 @@ import EditModal from "./EditModal";
 import moment from "moment";
 import "moment/locale/ko";
 import { getUserData } from "../storage/Cookie";
+import EditDelete from "./editDeleteModal";
 
 function PostCard({ posts, i }) {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ function PostCard({ posts, i }) {
   const onDeletePost = () => {
     dispatch(deleteFbPost(Number(id)));
   };
+
+  let [editDelete, setEditDelete] = useState(false);
 
   const [EditToggle, setEditToggle] = useState(false);
   const [commentToggle, setCommentToggle] = useState(false);
@@ -59,11 +62,24 @@ function PostCard({ posts, i }) {
             </p>
           </PostInfo>
         </PostTopLeft>
-        <StButton style={{ fontSize: "25px", marginRight: "10px" }}>
-          ...
-        </StButton>
+
+        {userinfo.userId === posts.posts.member.id ? (
+          <StButton
+            style={{ fontSize: "25px", marginRight: "10px", cursor: "pointer" }}
+            onClick={() => {
+              setEditDelete(editDelete === false ? true : false);
+            }}
+          >
+            ...
+          </StButton>
+        ) : null}
       </PostTop>
-      {userinfo.userId === posts.posts.member.id ? (
+
+      {editDelete === true ? (
+        <EditDelete tg={setEditToggle} posts={posts} />
+      ) : null}
+
+      {/* {userinfo.userId === posts.posts.member.id ? (
         <div>
           <StButton style={{ color: "red" }} onClick={onDeletePost}>
             delete
@@ -75,7 +91,7 @@ function PostCard({ posts, i }) {
             edit
           </StButton>
         </div>
-      ) : null}
+      ) : null} */}
 
       {EditToggle === true ? (
         <EditModal tg={setEditToggle} postId={id} />
@@ -138,7 +154,7 @@ function PostCard({ posts, i }) {
       </ButtonContainer>
 
       {commentToggle === true ? (
-        <CommentList postId={id} tg={setCommentToggle} />
+        <CommentList postId={id} tg={setCommentToggle} posts={posts} />
       ) : null}
     </PostContainer>
   );
