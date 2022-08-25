@@ -10,9 +10,11 @@ export const setAccessToken = (accessToken) => {
   return (
     cookies.set("user_token", accessToken),
     {
-      sameSite: "strict",
+      // sameSite: "none",
+      secure: false,      
       path: "/",
       expires: new Date(expireDate),
+      httpOnly: true
     }
   );
 };

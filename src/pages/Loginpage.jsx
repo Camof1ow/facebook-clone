@@ -5,10 +5,16 @@ import { useInput } from "../hooks/useInput";
 import axios from "axios";
 import { setAccessToken, setUserData } from "../storage/Cookie";
 import SignUp from "./Signuppage";
+import { KAKAO_AUTH_URL } from "../components/OAuth";
 
 // import Header from ".components/Header"
 
 function Login() {
+
+  const handleKakaoLogin = () =>{
+    window.location.href = KAKAO_AUTH_URL;
+  }
+
   const [userName, userNameHandler] = useInput("");
   const [userPassword, userPwHandler] = useInput("");
 
@@ -103,7 +109,7 @@ function Login() {
                 >
                   Login{" "}
                 </StBtn>
-                <StBtn style={{ backgroundColor: "#DFE31C" }}>
+                <StBtn onClick={handleKakaoLogin} style={{ backgroundColor: "#DFE31C" }}>
                   KaKaoTalk Login{" "}
                 </StBtn>
               </form>

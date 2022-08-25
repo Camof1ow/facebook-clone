@@ -30,7 +30,6 @@ function SignUp({ tg }) {
   const [nicknameMsg, setNicknameMsg] = useState("");
   const [passwordMsg, setPasswordMsg] = useState("");
   const [passwordConfirmMsg, setPasswordConfirmMsg] = useState("");
-
   const [profileImg, profileImgHandler] = useUploadImg("");
 
   const onChangeUsername = (event) => {
@@ -60,12 +59,12 @@ function SignUp({ tg }) {
   const onChangePassword = (event) => {
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (event.target.value) {
+    if (event.target.value.length>7) {
       setIsPassword(true);
       setPasswordMsg("올바른 비밀번호 형식입니다.");
     } else {
       setIsPassword(false);
-      setPasswordMsg("숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요");
+      setPasswordMsg("비밀번호는 8자리 이상 입력해주세요");
     }
     setPassword(event.target.value);
   };
@@ -75,9 +74,10 @@ function SignUp({ tg }) {
       setIsPasswordConfirm(true);
       setPasswordConfirmMsg("동일한 비밀번호입니다.");
     } else {
-      setIsPassword(false);
+      setIsPasswordConfirm(false);
       setPasswordConfirmMsg("비밀번호가 다릅니다.");
     }
+    setIsPassword(true);
     setPasswordConfirm(event.target.value);
   };
 
@@ -103,8 +103,6 @@ function SignUp({ tg }) {
     }
   };
 
-  console.log(password.length);
-
   const onSubmit = async () => {
     // if (validation()) {
     try {
@@ -115,24 +113,26 @@ function SignUp({ tg }) {
         profileImage: profileImg,
       });
       console.log(data);
+
     } catch (error) {
       console.log(error);
+      alert("입력 정보를 다시 확인하세요!!");
     }
-    //   alert("회원 가입 완료하였습니다!!");
+      alert("회원 가입 완료하였습니다!!");
     setUsername("");
     setNickname("");
     setPassword("");
     return;
   };
   //     else {
-  //       alert("입력 정보를 다시 확인하세요!!");
+  //       
 
   //     }
   //   };
 
   return (
     <ModalLayer>
-      <ModalDiv>
+      <ModalDiv style={{width: '340px', height: '550px', padding: '0px 25px 0px'}}>
         <div style={{ textAlign: "right", margin: "0px" }}>
           <StBtnX onClick={() => tg(false)}>X</StBtnX>
         </div>
@@ -199,11 +199,7 @@ function SignUp({ tg }) {
             />
             <StMsg>
               {passwordConfirm.length > 0 && (
-                <span
-                  className={`message ${
-                    isPasswordConfirm ? "success" : "error"
-                  }`}
-                >
+                <span className={`message ${isPasswordConfirm ? "success" : "error"}`}>
                   {passwordConfirmMsg}
                 </span>
               )}
@@ -218,7 +214,7 @@ function SignUp({ tg }) {
             style={{
               color: "white",
               backgroundColor: "#49C530",
-              margin: "10px 50px",
+              margin: "0px 50px",
             }}
           >
             sign up
@@ -301,4 +297,6 @@ const StMsg = styled.div`
   top: -5px;
   bottom: -10px;
   left: 0;
+  .message {&.success {color: #8f8c8b;}
+       	&.error {color: #ff2727;}}
 `;

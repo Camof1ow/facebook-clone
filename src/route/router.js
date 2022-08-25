@@ -4,6 +4,7 @@ import Mainpage from "../pages/Mainpage";
 import LoginPage from "../pages/Loginpage";
 import SignUp from "../pages/Signuppage";
 import { getCookieToken } from "../storage/Cookie";
+import Kakao from "../components/Kakao";
 
 const Router = () => {
   const usertoken = getCookieToken();
@@ -17,6 +18,7 @@ const Router = () => {
         />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="/oauth/kakao/callback" element={<Kakao/>} />
       </Routes>
     </BrowserRouter>
   );
