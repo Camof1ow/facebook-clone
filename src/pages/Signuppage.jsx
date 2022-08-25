@@ -108,15 +108,12 @@ function SignUp({ tg }) {
   const onSubmit = async () => {
     // if (validation()) {
     try {
-      const data = await axios.post(
-        "http://52.79.240.14:8080/api/member/signup",
-        {
-          username,
-          nickname,
-          password,
-          profileImage: profileImg,
-        }
-      );
+      const data = await axios.post("https://g10000.shop/api/member/signup", {
+        username,
+        nickname,
+        password,
+        profileImage: profileImg,
+      });
       console.log(data);
     } catch (error) {
       console.log(error);

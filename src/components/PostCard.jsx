@@ -20,7 +20,9 @@ function PostCard({ posts, i }) {
 
   const onGetComment = () => {
     setCommentToggle(!commentToggle);
-    dispatch(getAllCommentsById(id));
+    if (commentToggle === false) {
+      dispatch(getAllCommentsById(id));
+    }
   };
 
   return (
@@ -64,7 +66,10 @@ function PostCard({ posts, i }) {
           <StButton onClick={onGetComment}>Comment</StButton>
         </ButtonBox>
       </ButtonContainer>
-      {commentToggle === true ? <CommentList postId={id} /> : null}
+
+      {commentToggle === true ? (
+        <CommentList postId={id} tg={setCommentToggle} />
+      ) : null}
     </PostContainer>
   );
 }

@@ -15,7 +15,7 @@ export const getFbPostLists = createAsyncThunk(
   "fbPosts/getFbPostLists",
   async (payload, thunkAPI) => {
     try {
-      const data = await axios.get("http://52.79.240.14:8080/api/posts", {
+      const data = await axios.get("https://g10000.shop/api/posts", {
         headers: { authorization: usertoken },
       });
       console.log(data);
@@ -31,7 +31,7 @@ export const addFbPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.post(
-        "http://52.79.240.14:8080/api/posts",
+        "https://g10000.shop/api/posts",
         {
           imageUrl: payload.imgFile,
           content: payload.postContent,
@@ -50,7 +50,7 @@ export const deleteFbPost = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       const data = await axios.delete(
-        `http://52.79.240.14:8080/api/posts/${payload}`,
+        `https://g10000.shop/api/posts/${payload}`,
         { headers: { authorization: usertoken } }
       );
       console.log(data);
@@ -68,7 +68,7 @@ export const editFbPost = createAsyncThunk(
     console.log(payload);
     try {
       const data = await axios.put(
-        `http://52.79.240.14:8080/api/posts/${payload.postId}`,
+        `https://g10000.shop/api/posts/${payload.postId}`,
         {
           content: payload.postContent,
           imageUrl: payload.imgFileNull,
@@ -78,6 +78,7 @@ export const editFbPost = createAsyncThunk(
       console.log(data);
       return thunkAPI.fulfillWithValue(data.data.data);
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }

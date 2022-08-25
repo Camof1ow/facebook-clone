@@ -1,18 +1,44 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { useInput } from "../hooks/useInput";
 import facebookLogo from "../img/facebook-logo.png";
+import { searchFriend } from "../redux/modules/searchSlice";
 import { getUserData } from "../storage/Cookie";
 import SearchList from "./SearchList";
 
 function Header() {
   const myProfile = getUserData();
 
+  const dispatch = useDispatch();
+
+  const [searchInput, setSearchInput] = useState("");
+  const [searchToggle, setSearchToggle] = useState(false);
+
+  const onSearchInput = (e) => {
+    const searchValue = e.target.value;
+
+    if (searchValue === "") {
+      setSearchToggle(false);
+    } else {
+      dispatch(searchFriend(searchValue));
+      setSearchToggle(true);
+    }
+  };
+
+  const onSearch = () => {};
+
   return (
     <HeaderDiv>
       <FBlogo src={facebookLogo}></FBlogo>
       <Searchbox>
-        <SearchInput placeholder="search friends" />
+        <SearchInput
+          // value={searchInput}
+          onChange={(e) => onSearchInput(e)}
+          placeholder="search friends"
+        />
       </Searchbox>
-      {/* <p>{myProfile.nickname}</p> */}
+      {searchToggle === true ? <SearchList /> : null}
       <MyProfileImg src={myProfile.profileImage} />
     </HeaderDiv>
   );
@@ -51,7 +77,7 @@ const SearchInput = styled.input`
 
   font-style: normal;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 12px;
 `;
 
 const Searchbox = styled.div``;
