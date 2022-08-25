@@ -11,6 +11,8 @@ import {
   UiInput,
 } from "../UI/UiTags";
 
+import styled from "styled-components";
+
 function EachComment({ postId, comment }) {
   const dispatch = useDispatch();
   const [editToggle, setEditToggle] = useState(false);
@@ -40,20 +42,20 @@ function EachComment({ postId, comment }) {
               {comment.comment}
             </p>
           </GreyDivBox>{" "}
-          <button
+          <button style={{marginLeft: "5px"}}
             onClick={() => {
               onDeleteComment(comment.id);
             }}
           >
             delete
           </button>
-          <button onClick={() => setEditToggle(true)}>edit</button>
+          <button style={{marginLeft: "5px"}} onClick={() => setEditToggle(true)}>edit</button>
         </>
       ) : (
         <div>
           <UiInput value={editedComment} onChange={editedCommentHandler} />
-          <button onClick={() => onEditComment(comment.id)}>수정완료</button>
-          <button onClick={() => setEditToggle(false)}>cancel</button>
+          <button style={{marginLeft: "5px"}}onClick={() => onEditComment(comment.id)}>수정</button>
+          <button style={{marginLeft: "5px"}}onClick={() => setEditToggle(false)}>취소</button>
         </div>
       )}
     </>
@@ -61,3 +63,14 @@ function EachComment({ postId, comment }) {
 }
 
 export default EachComment;
+
+const StBtn = styled.button`
+  padding: 10px;
+  margin: 0px 0px 10px 3px;
+  width: 60px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  border: solid 1px;
+  float: left;
+`;

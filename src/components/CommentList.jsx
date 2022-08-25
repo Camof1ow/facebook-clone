@@ -43,7 +43,7 @@ function CommentList({ postId, tg }) {
                 <ProfileImgDiv>
                   <ProfileImg />
                 </ProfileImgDiv>
-                <EachComment postId={postId} comment={comment} />
+                <EachComment  postId={postId} comment={comment} />
               </InOneLine>
             ))}{" "}
           </div>
@@ -75,7 +75,7 @@ export default CommentList;
 const StBtn = styled.button`
   padding: 10px;
   margin: 10px 0px 10px 3px;
-  width: 50px;
+  width: 60px;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
